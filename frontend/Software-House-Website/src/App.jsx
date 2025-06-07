@@ -2,16 +2,38 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 
 import Home from './pages/Home/Home';
-// import About from './pages/About/About';         // Placeholder
-// import Services from './pages/Services/Services'; // Placeholder
-// import Career from './pages/Career/Career';       // Placeholder
-// import Contact from './pages/Contact/Contact';    // Placeholder
+import About from './pages/About/About';
+import MainLayout from './components/MainLayout';
+import Services from './pages/Services/Services';
+import Career from './pages/Career/Career';     
+import Contact from './pages/Contact/Contact';   
 
 function App() {
   const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />
+      },
+      {
+        path: 'about',
+        element: <About />
+      },{
+        path: 'services',
+        element: <Services />
+      },
+      {
+        path: '/career',
+        element: <Career />,
+      },
+      {
+        path: '/contact',
+        element: <Contact />,
+      },
+    ]
   },
   // {
   //   path: '/about',
@@ -20,11 +42,7 @@ function App() {
   // {
   //   path: '/services',
   //   element: <Services />,
-  // },
-  // {
-  //   path: '/career',
-  //   element: <Career />,
-  // },
+  // }
   // {
   //   path: '/contact',
   //   element: <Contact />,

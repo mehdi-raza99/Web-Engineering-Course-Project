@@ -8,12 +8,29 @@ const ContactForm = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
-    // Later: Send data to backend using fetch or axios
-    setForm({ name: "", email: "", message: "" });
-    alert("Thank you for contacting us!");
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+  
+      const data = await res.json();
+  
+      if (res.ok) {
+        alert(data.message);
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        alert(data.error || "Something went wrong.");
+      }
+    } catch (error) {
+      alert("Error submitting form. Please try again.");
+      console.error(error);
+    }
   };
 
   return (
